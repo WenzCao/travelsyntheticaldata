@@ -1,4 +1,4 @@
-package platform.travel.syntheticaldata;
+package platform.travel.syntheticaldata.action;
 
 public class Index {
 	public String execute() {
