@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import platform.travel.syntheticaldata.PermissionOpt;
+import platform.travel.syntheticaldata.dao.GroupMapper;
 import platform.travel.syntheticaldata.dao.PermissionMapper;
 import platform.travel.syntheticaldata.dao.TravelSqlSessionFactory;
 import platform.travel.syntheticaldata.entity.Permission;  
@@ -58,9 +59,11 @@ public class PermissionTest {
 //		SqlSession sqlSession = test.getSqlSessionFactory().openSession();  
 //		PermissionMapper userMapper = sqlSession.getMapper(PermissionMapper.class);
 		
-		PermissionMapper userMapper = (PermissionMapper) TravelSqlSessionFactory.Instance().getSqlMapper(PermissionMapper.class);
-		Permission permission = userMapper.findPermissionById(1);
+		SqlSession sqlSession = TravelSqlSessionFactory.Instance().getSqlSession();
+		PermissionMapper permissionMapper = sqlSession.getMapper(PermissionMapper.class);
+		Permission permission = permissionMapper.findPermissionById(1);
 		System.out.println(permission);
+		sqlSession.close();
 		
 //		Permission new_permission = new Permission();  
 //		new_permission.setName("permission_delete");

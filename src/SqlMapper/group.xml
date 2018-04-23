@@ -3,27 +3,49 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="group">
+<mapper namespace="platform.travel.syntheticaldata.dao.GroupMapper">
 
-	<resultMap id="permissionResult" type="permission">  
-       <id column="id" property="id"/>  
-       <result column="optype" property="optype" javaType="platform.travel.syntheticaldata.PermissionOpt" jdbcType="INTEGER"/>  
+    <resultMap id="permissionMap" type="group">
+        <id column="groupId" property="id"/>
+        <result column="name" property="name"/>
+        
+        <collection  property="permissions"  ofType="platform.travel.syntheticaldata.entity.Permission">
+            <id property="id" column="permissionId" />
+            <result column="name" property="name"/>
+            <result column="tablename" property="tablename"/>
+            <result column="optype" property="optype" javaType="platform.travel.syntheticaldata.PermissionOpt" jdbcType="INTEGER"/>    
+        </collection>
     </resultMap>
     
-	<select id="findPermissionById" parameterType="java.lang.Integer" resultType="permission" resultMap="permissionResult">
-		SELECT * FROM permission WHERE id=#{id}
+	<select id="findGroupById" parameterType="java.lang.Integer" resultType="group" resultMap="permissionMap">
+		SELECT * FROM `group` g INNER JOIN permission_in_group m ON g.id=m.groupId INNER JOIN permission p ON p.id=m.permissionId WHERE g.id=#{id}
+	</select>
+	
+	<select id="isPermissionInGroup" resultType="java.lang.Integer">
+		SELECT count(*) FROM `permission_in_group` WHERE groupId=#{groupId} and permissionId=#{permissionId}
 	</select>
 
-	<insert id="insertPermission" parameterType="permission">
+	<insert id="insertGroup" parameterType="group">
 		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO permission(name, tablename, optype) value(#{name}, #{tablename}, #{optype, javaType=platform.travel.syntheticaldata.PermissionOpt, jdbcType=INTEGER})
+		INSERT INTO permission(name) value(#{name})
+	</insert>
+ 	
+ 	<insert id="insertPermissionToGroup">
+		INSERT INTO `permission_in_group`(groupId, permissionId) value(#{groupId}, #{permissionId})
 	</insert>
 
-
-	<delete id="deletePermission" parameterType="java.lang.Integer">
-		DELETE FROM permission WHERE id=#{id}
+	<delete id="deleteGroup">
+		DELETE FROM `group` WHERE id=#{groupId}
 	</delete>
+	
+	<delete id="deletePermissionFromGroup">
+		DELETE FROM `permission_in_group` WHERE groupId=#{groupId} and permissionId=#{permissionId}
+	</delete>
+	
+	<update id="updateGroupName">    
+        UPDATE `group` SET name=#{groupName} WHERE id=#{groupId}  
+    </update>
 
 </mapper>

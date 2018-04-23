@@ -31,8 +31,4 @@ public class TravelSqlSessionFactory {
 		return sqlSession;
 	}
 	
-	public Object getSqlMapper(Class mapperClass) throws IOException {
-		SqlSession sqlSession = this.sqlSessionFactory.openSession();
-		return sqlSession.getMapper(mapperClass);
-	}
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class Group {
 	private int id;
 	private String name;
-	private List<Permission> permission;
+	private List<Permission> permissions;
 
 	public int getId() {
 		return id;
@@ -23,12 +23,22 @@ public class Group {
 		this.name = name;
 	}
 
-	public List<Permission> getPermission() {
-		return permission;
+	public List<Permission> getPermissions() {
+		return permissions;
 	}
 
-	public void setPermission(List<Permission> permission) {
-		this.permission = permission;
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
+	}
+
+	public void addPermission(Permission permission) {
+		// TODO Auto-generated method stub
+		this.permissions.add(permission);
+	}
+
+	public void removePermission(Permission permission) {
+		// TODO Auto-generated method stub
+		this.permissions.remove(permission);
 	}
 
 }
