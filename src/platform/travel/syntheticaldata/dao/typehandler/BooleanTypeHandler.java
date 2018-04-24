@@ -1,4 +1,4 @@
-package platform.travel.syntheticaldata.dao;
+package platform.travel.syntheticaldata.dao.typehandler;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import platform.travel.syntheticaldata.PermissionOpt;
 /**
  * @author change PermissionOpt in java To int in jdbc
  */
-public class PermissionOptTypeHandler implements TypeHandler {
+public class BooleanTypeHandler implements TypeHandler {
 
 	/*
 	 * (non-Javadoc)
@@ -25,13 +25,19 @@ public class PermissionOptTypeHandler implements TypeHandler {
 	@Override
 	public Object getResult(ResultSet rs, String columnName) throws SQLException {
 		int columnValue = rs.getInt(columnName);
-		return PermissionOpt.getPermissionOpt(columnValue);
+		boolean ret = false;
+		if (columnValue != 0)
+			ret = true;
+		return ret;
 	}
 
 	@Override
 	public Object getResult(CallableStatement cs, int columnIndex) throws SQLException {
 		int columnValue = cs.getInt(columnIndex);
-		return PermissionOpt.getPermissionOpt(columnValue);
+		boolean ret = false;
+		if (columnValue != 0)
+			ret = true;
+		return ret;
 	}
 
 	/*
@@ -43,7 +49,10 @@ public class PermissionOptTypeHandler implements TypeHandler {
 	@Override
 	public Object getResult(ResultSet rs, int columnIndex) throws SQLException {
 		int columnValue = rs.getInt(columnIndex);
-		return PermissionOpt.getPermissionOpt(columnValue);
+		boolean ret = false;
+		if (columnValue != 0)
+			ret = true;
+		return ret;
 	}
 
 	/*
@@ -55,12 +64,10 @@ public class PermissionOptTypeHandler implements TypeHandler {
 	 */
 	@Override
 	public void setParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
-		if (parameter == null)
+		boolean val = (boolean) parameter;
+		if (val)
+			ps.setInt(i, 1);
+		else
 			ps.setInt(i, 0);
-		else {
-			PermissionOpt value = (PermissionOpt) parameter;
-			ps.setInt(i, value.getOptype());
-		}
 	}
-
 }

@@ -13,10 +13,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAliases>
 		<typeAlias type="platform.travel.syntheticaldata.entity.Permission" alias="permission" />
 		<typeAlias type="platform.travel.syntheticaldata.entity.Group" alias="group" />
+		<typeAlias type="platform.travel.syntheticaldata.entity.User" alias="user" />
 	</typeAliases>
 	
 	<typeHandlers>  
-    	<typeHandler javaType="platform.travel.syntheticaldata.PermissionOpt" jdbcType="INTEGER" handler="platform.travel.syntheticaldata.dao.PermissionOptTypeHandler" /> 
+    	<typeHandler javaType="platform.travel.syntheticaldata.PermissionOpt" jdbcType="INTEGER" handler="platform.travel.syntheticaldata.dao.typehandler.PermissionOptTypeHandler" /> 
+    	<typeHandler javaType="java.lang.Boolean" jdbcType="INTEGER" handler="platform.travel.syntheticaldata.dao.typehandler.BooleanTypeHandler" /> 
     </typeHandlers>
 
 	<environments default="development">
@@ -35,6 +37,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<mappers>
 		<mapper resource="SqlMapper/permission.xml" />
 		<mapper resource="SqlMapper/group.xml" />
+		<mapper resource="SqlMapper/user.xml" />
 	</mappers>
 
 </configuration>

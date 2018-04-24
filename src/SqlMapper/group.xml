@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO permission(name) value(#{name})
+		INSERT INTO `group`(name) value(#{name})
 	</insert>
  	
  	<insert id="insertPermissionToGroup">

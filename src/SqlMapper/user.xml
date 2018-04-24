@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="platform.travel.syntheticaldata.dao.UserMapper">
+
+	<resultMap id="userMap" type="user">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="pwd" property="pwd" />
+		<result column="active" property="active" />
+		<result column="realname" property="realname" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+
+		<association property="group"
+			javaType="platform.travel.syntheticaldata.entity.Group">
+			<id column="groupId" property="id" />
+			<result column="gname" property="name" />
+			
+			<collection property="permissions" ofType="platform.travel.syntheticaldata.entity.Permission"> 
+				<id property="id" column="permissionId" />
+				<result column="pname" property="name"/> 
+				<result column="tablename" property="tablename"/>
+				<result column="optype" property="optype" javaType="platform.travel.syntheticaldata.PermissionOpt" jdbcType="INTEGER"/>
+			</collection>
+		</association>
+
+	</resultMap>
+
+	<select id="findUserById" resultMap="userMap">
+		SELECT * FROM
+			`user` AS u,
+			(SELECT g.id AS gid, g.`name` AS gname, p.id AS pid, p.`name` AS pname, tablename, optype, groupId, permissionId FROM `group` g INNER JOIN permission_in_group m ON g.id=m.groupId INNER JOIN permission p ON p.id=m.permissionId) AS j
+		WHERE u.id=#{userId} AND u.groupId=j.gid;
+	</select>
+
+	<select id="isUserExcit" resultType="java.lang.Integer">
+		SELECT count(*) FROM `user`
+		WHERE name=#{userName} and pwd=#{pwd}
+	</select>
+
+	<insert id="insertUser" parameterType="user">
+		<selectKey keyProperty="id" order="AFTER"
+			resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO `user`(name, pwd, active, groupId, realname, email, phone) 
+			value(#{name}, #{pwd}, #{active, javaType=java.lang.Boolean, jdbcType=INTEGER}, #{group.id}, #{realname}, #{email}, #{phone})
+	</insert>
+
+	<delete id="deleteUser">
+		DELETE FROM `user` WHERE id=#{userId}
+	</delete>
+
+	<update id="updateUser" parameterType="user">
+		UPDATE `user` SET name=#{name}, pwd=#{pwd}, active=#{active, javaType=java.lang.Boolean, jdbcType=INTEGER}, groupId=#{group.id}, realname=#{realname}, email=#{email}, phone=#{phone}
+			WHERE id=#{id}
+	</update>
+
+</mapper>
