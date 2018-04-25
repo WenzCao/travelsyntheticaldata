@@ -2651,9 +2651,10 @@ pre {
     .header .header-block-search .input-container input {
       background-color: transparent;
       border: none;
+      border-bottom: 1px solid #85CE36;
       padding-left: 25px;
       height: 40px;
-      max-width: 150px; }
+      width: 500px; }
       @media (max-width: 767.98px) {
         .header .header-block-search .input-container input {
           max-width: 140px; } }

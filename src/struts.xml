@@ -35,12 +35,17 @@
 
     <package name="default" extends="struts-default">
 
-		<action name="login">
+		<action name="login_input">
             <result name="success" type="freemarker">/ftl/login.ftl</result>
         </action>
         
+        <action name="login" class="platform.travel.syntheticaldata.action.LoginAction">
+            <result name="input" type="freemarker">/ftl/login.ftl</result>
+            <result name="success" type="freemarker">/ftl/index.ftl</result>
+        </action>
+        
         <action name="index" class="platform.travel.syntheticaldata.action.Index">
-            <result name="success">/jsp/index.jsp</result>
+            <result name="success">/ftl/index.html</result>
         </action>
 
     </package>

@@ -75,18 +75,12 @@ $(function() {
 
     var loginValidationSettings = {
 	    rules: {
-	        username: {
-	            required: true,
-	            email: true
-	        },
+	        username: "required",
 	        password: "required",
 	        agree: "required"
 	    },
 	    messages: {
-	        username: {
-	            required: "Please enter username",
-	            email: "Please enter a valid email address"
-	        },
+	        username: "Please enter username",
 	        password:  "Please enter password",
 	        agree: "Please accept our policy"
 	    },
