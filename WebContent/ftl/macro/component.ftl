@@ -126,6 +126,23 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-sitemap"></i> 用户管理
+                            <i class="fa arrow"></i>
+                        </a>
+                        <ul class="sidebar-nav">
+                            <li>
+                                <a href="#"> 用户管理 </a>
+                            </li>
+                            <li>
+                                <a href="#"> 组管理 </a>
+                            </li>
+                            <li>
+                                <a href="#"> 权限管理 </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </div>
